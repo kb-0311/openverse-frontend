@@ -141,6 +141,7 @@ export default {
     '@nuxtjs/style-resources',
     '@nuxtjs/svg',
     '@nuxtjs/eslint-module',
+    '@pinia/nuxt',
   ],
   // Load the scss variables into every component:
   // No need to import them. Since the variables will not exist in the final build,
@@ -206,6 +207,11 @@ export default {
     // Enables use of IDE debuggers
     extend(config, ctx) {
       config.devtool = ctx.isClient ? 'source-map' : 'inline-source-map'
+      config.module.rules.push({
+        test: /\.mjs$/,
+        include: /node_modules/,
+        type: 'javascript/auto',
+      })
     },
   },
   storybook: {
