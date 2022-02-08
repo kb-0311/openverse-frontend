@@ -1,5 +1,6 @@
 import debounce from 'lodash.debounce'
 import { sendWindowMessage } from '~/utils/send-message'
+import { useNavStore } from '@/stores/nav'
 
 /**
  * When the app is in embedded mode, it passes the full height
@@ -7,9 +8,14 @@ import { sendWindowMessage } from '~/utils/send-message'
  * sets the correct iframe height to avoid double scrollbars
  */
 export default {
-  data: () => ({ height: 0, observer: null }),
+  data: () => ({ height: 0, observer: null, navStore: useNavStore() }),
+  computed: {
+    isEmbedded() {
+      return this.navStore.isEmbedded
+    },
+  },
   mounted() {
-    if (this.$store.state.nav.isEmbedded) {
+    if (this.isEmbedded) {
       this.notifyOuterWindow(document.documentElement.scrollHeight)
       this.observer = this.createResizeObserver()
       this.observer?.observe(document.documentElement)

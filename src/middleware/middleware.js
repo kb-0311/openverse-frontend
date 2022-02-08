@@ -1,6 +1,5 @@
-import { SET_EMBEDDED, SET_REFERRED } from '~/constants/mutation-types'
 import { sendWindowMessage } from '~/utils/send-message'
-import { NAV } from '~/constants/store-modules'
+import { useNavStore } from '~/stores/nav'
 
 /**
  * In embedded mode, the app sends its size and url
@@ -16,10 +15,11 @@ import { NAV } from '~/constants/store-modules'
  * - `resize` sends the height of the window (see `src/mixins/iframe-height.js`)
  * - `urlChange` sends the relative path of the URL on every URL change.
  */
-export default function ({ store, query, route }) {
+export default function ({ $pinia, query, route }) {
+  const navStore = useNavStore($pinia)
   if ('embedded' in query) {
     const isEmbedded = query.embedded === 'true'
-    store.commit(`${NAV}/${SET_EMBEDDED}`, { isEmbedded })
+    navStore.setEmbedded({ isEmbedded })
   }
   if (process.client) {
     sendWindowMessage({
@@ -28,7 +28,7 @@ export default function ({ store, query, route }) {
     })
   }
 
-  if (store.state.nav.isReferredFromCc) {
-    store.commit(`${NAV}/${SET_REFERRED}`, { isReferredFromCc: false })
+  if (navStore.isReferredFromCc) {
+    navStore.setReferred({ isReferredFromCc: false })
   }
 }

@@ -141,7 +141,7 @@ export default {
     '@nuxtjs/style-resources',
     '@nuxtjs/svg',
     '@nuxtjs/eslint-module',
-    '@pinia/nuxt',
+    ['@pinia/nuxt', { disableVuex: false }],
   ],
   // Load the scss variables into every component:
   // No need to import them. Since the variables will not exist in the final build,
