@@ -61,9 +61,6 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
-import { BUG_REPORT } from '~/constants/store-modules'
-
 const bugForm =
   'https://docs.google.com/forms/d/e/1FAIpQLSenCn-3HoZlCz4vlL2621wjezfu1sPZDaWGe_FtQ1R5-5qR4Q/viewform'
 const suggestionForm =
@@ -97,19 +94,10 @@ export const FeedbackPage = {
       this.activeTab = tabIdx
     },
   },
-  computed: {
-    ...mapState(BUG_REPORT, [
-      'isReportingBug',
-      'bugReported',
-      'bugReportFailed',
-    ]),
-  },
 }
 
 export default FeedbackPage
 </script>
-
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
 .form-iframe {
   width: 100%;
